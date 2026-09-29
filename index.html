@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TableEase – Luxury Pune Restaurant & Hotel Reservation Suite</title>
+    <meta name="description" content="Professional restaurant discovery, table reservation, and hospitality management platform for top-tier Pune hotels and restaurants.">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- ==========================================
+             SIDEBAR NAVIGATION
+             ========================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand-wrapper">
+                <a href="#dashboard" class="brand-logo" onclick="App.navigateTo('dashboard'); return false;">
+                    <div class="brand-icon-box">
+                        <i data-lucide="chef-hat"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h1>TableEase</h1>
+                        <p class="tagline">DINE &bull; RESERVE &bull; MANAGE</p>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <span class="nav-section-title">Main Experience</span>
+                
+                <a href="#dashboard" class="nav-item active" data-view="dashboard" onclick="App.navigateTo('dashboard'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <span class="nav-badge accent" id="sidebar-badge-today">0</span>
+                </a>
+
+                <a href="#hotels" class="nav-item" data-view="hotels" onclick="App.navigateTo('hotels'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="compass"></i>
+                        <span>Hotels & Discovery</span>
+                    </div>
+                    <span class="nav-badge" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">Pune</span>
+                </a>
+
+                <a href="#menu" class="nav-item" data-view="menu" onclick="App.navigateTo('menu'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="utensils"></i>
+                        <span>Menu Items</span>
+                    </div>
+                    <span class="nav-badge" id="sidebar-badge-menu">18</span>
+                </a>
+
+                <a href="#reservations" class="nav-item" data-view="reservations" onclick="App.navigateTo('reservations'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="calendar-check"></i>
+                        <span>Reservations</span>
+                    </div>
+                    <span class="nav-badge" id="sidebar-badge-reservations">0</span>
+                </a>
+
+                <a href="#tables" class="nav-item" data-view="tables" onclick="App.navigateTo('tables'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="grid-3x3"></i>
+                        <span>Tables & Floor</span>
+                    </div>
+                    <span class="nav-badge" id="sidebar-badge-tables">0</span>
+                </a>
+
+                <a href="#restaurants" class="nav-item" data-view="restaurants" onclick="App.navigateTo('restaurants'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="building-2"></i>
+                        <span>Restaurants</span>
+                    </div>
+                    <span class="nav-badge" id="sidebar-badge-restaurants">0</span>
+                </a>
+
+                <a href="#customers" class="nav-item" data-view="customers" onclick="App.navigateTo('customers'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="users"></i>
+                        <span>Customers</span>
+                    </div>
+                    <span class="nav-badge" id="sidebar-badge-customers">0</span>
+                </a>
+
+                <span class="nav-section-title" style="margin-top: 14px;">Academic & System</span>
+                
+                <a href="#viva" class="nav-item" data-view="viva" onclick="App.navigateTo('viva'); return false;">
+                    <div class="nav-item-content">
+                        <i data-lucide="code-2"></i>
+                        <span>Spring Boot & Viva</span>
+                    </div>
+                    <span class="nav-badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8;">API</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Sidebar Promo Banner (Matches User Reference Image) -->
+            <div class="sidebar-promo-card">
+                <div class="promo-bg-image"></div>
+                <div class="promo-content">
+                    <span class="promo-tag">Good Food Better People</span>
+                    <p>Experience the perfect blend of taste and ambience.</p>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="tech-pill-box">
+                    <div class="tech-pill-header">
+                        <span>Architecture Status</span>
+                        <span class="status-dot online" title="Spring Boot Ready"></span>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag-mini">Spring Boot</span>
+                        <span class="tag-mini">JdbcTemplate</span>
+                        <span class="tag-mini">MySQL</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ==========================================
+             MAIN CONTENT WRAPPER
+             ========================================== -->
+        <div class="main-wrapper">
+            
+            <!-- TOP HEADER (Matches Screenshot) -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <!-- Global Search Bar -->
+                    <div class="global-search-container">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="global-search-input" placeholder="Search customers, restaurants, menu items or reservations..." oninput="App.handleGlobalSearch(event)" autocomplete="off">
+                        <!-- Quick Search Dropdown -->
+                        <div class="global-search-results" id="global-search-results"></div>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Live Date & Time Display -->
+                    <div class="header-time-pill" id="liveDateTimePill">
+                        <i data-lucide="calendar"></i>
+                        <span id="currentDateDisplay">Sun, 28 Sept 2026 | 07:24 PM</span>
+                    </div>
+
+                    <!-- Notification Bell -->
+                    <div class="notification-bell-btn" title="3 New Notifications" onclick="App.showToast('Notifications', '3 table holds waiting for host confirmation.', 'info')">
+                        <i data-lucide="bell"></i>
+                        <span class="bell-badge">3</span>
+                    </div>
+
+                    <!-- Order Tray Quick Button -->
+                    <button class="btn btn-secondary btn-sm order-tray-trigger" onclick="App.openOrderTrayModal()" title="View selected table order items">
+                        <i data-lucide="shopping-bag"></i>
+                        <span id="order-tray-count">0</span>
+                    </button>
+
+                    <!-- Quick Book Table Button -->
+                    <button class="btn btn-primary btn-sm" onclick="App.openReservationModal()">
+                        <i data-lucide="calendar-plus"></i>
+                        <span>Book Table</span>
+                    </button>
+
+                    <!-- Admin Profile Badge -->
+                    <div class="user-profile-badge">
+                        <div class="user-avatar">A</div>
+                        <div class="user-info-text">
+                            <div class="user-name">Admin <i data-lucide="chevron-down" style="width: 14px; height: 14px; margin-left: 2px;"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MAIN VIEW CONTAINER -->
+            <main class="content-body">
+
+                <!-- ==========================================
+                     1. DASHBOARD VIEW (Exact High-End Layout)
+                     ========================================== -->
+                <section class="view-section active" id="view-dashboard">
+                    
+                    <!-- Atmospheric Welcome Hero Banner with Pune Ambience Image -->
+                    <div class="dashboard-hero-banner">
+                        <div class="hero-banner-overlay"></div>
+                        <div class="hero-banner-content">
+                            <div class="hero-left">
+                                <h1 class="hero-title">Welcome back, Admin 👋</h1>
+                                <p class="hero-subtitle">Manage your restaurant, tables, menu and reservations all in one place.</p>
+                                
+                                <div class="hero-controls-row">
+                                    <div class="restaurant-selector-pill">
+                                        <i data-lucide="store" style="width: 16px; height: 16px; color: var(--gold-accent);"></i>
+                                        <select id="dash-restaurant-selector" onchange="App.handleDashRestaurantChange(this.value)">
+                                            <!-- Dynamically populated -->
+                                        </select>
+                                    </div>
+                                    <div class="open-status-pill">
+                                        <span class="status-indicator-dot pulse"></span>
+                                        <span id="dash-open-status-text">Open Now (10:00 AM - 11:00 PM)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hero-right">
+                                <div class="quote-card">
+                                    <p class="quote-text">“Good food brings people together.”</p>
+                                    <span class="quote-author">— TableEase</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5 Metric Stat Cards Grid (Pink, Orange, Blue, Green, Purple) -->
+                    <div class="stats-grid-5">
+                        <div class="stat-card-modern stat-pink">
+                            <div class="stat-icon-circle"><i data-lucide="users"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Customers</span>
+                                <div class="stat-value-row">
+                                    <span class="stat-num" id="dash-total-customers">124</span>
+                                    <span class="stat-badge green"><i data-lucide="trending-up"></i> +12%</span>
+                                </div>
+                                <span class="stat-subtext">+13 new this month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern stat-orange">
+                            <div class="stat-icon-circle"><i data-lucide="building-2"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Restaurants</span>
+                                <div class="stat-value-row">
+                                    <span class="stat-num" id="dash-total-restaurants">6</span>
+                                    <span class="stat-badge orange">+0%</span>
+                                </div>
+                                <span class="stat-subtext">Across Pune locations</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern stat-blue">
+                            <div class="stat-icon-circle"><i data-lucide="grid-3x3"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Tables</span>
+                                <div class="stat-value-row">
+                                    <span class="stat-num" id="dash-total-tables">31</span>
+                                    <span class="stat-badge green"><i data-lucide="trending-up"></i> +7%</span>
+                                </div>
+                                <span class="stat-subtext" id="dash-tables-avail-summary">24 available &bull; 7 reserved</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern stat-green">
+                            <div class="stat-icon-circle"><i data-lucide="calendar"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Today's Reservations</span>
+                                <div class="stat-value-row">
+                                    <span class="stat-num" id="dash-today-reservations">7</span>
+                                    <span class="stat-badge green"><i data-lucide="trending-up"></i> +28%</span>
+                                </div>
+                                <span class="stat-subtext" id="dash-reservations-breakdown">5 upcoming &bull; 2 seated</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern stat-purple">
+                            <div class="stat-icon-circle"><i data-lucide="utensils"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Menu Items</span>
+                                <div class="stat-value-row">
+                                    <span class="stat-num" id="dash-menu-items">18</span>
+                                    <span class="stat-badge green"><i data-lucide="trending-up"></i> +6%</span>
+                                </div>
+                                <span class="stat-subtext">Across 9 categories</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Split Dashboard Grid: Today's Reservations + Table Layout + Quick Actions & Featured -->
+                    <div class="dashboard-main-grid">
+                        
+                        <!-- LEFT COLUMN: Today's Reservations Feed -->
+                        <div class="dash-col-left">
+                            <div class="content-card">
+                                <div class="content-card-header">
+                                    <div>
+                                        <h3 class="card-title">Today's Reservations</h3>
+                                        <p class="card-subtitle">Real-time guest arrivals and table allocations</p>
+                                    </div>
+                                    <button class="btn btn-outline-burgundy btn-sm" onclick="App.navigateTo('reservations')">
+                                        <span>View All</span>
+                                    </button>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="data-table-modern">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Customer</th>
+                                                <th>Table</th>
+                                                <th>Date & Time</th>
+                                                <th>Guests</th>
+                                                <th>Status</th>
+                                                <th style="text-align: right;">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dash-today-table-body">
+                                            <!-- Dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: Interactive Table Layout Visualizer & Quick Actions -->
+                        <div class="dash-col-right">
+                            
+                            <!-- Visual Table Layout Floor Plan (Matches Screenshot) -->
+                            <div class="content-card floor-plan-card">
+                                <div class="content-card-header" style="margin-bottom: 12px;">
+                                    <div>
+                                        <h3 class="card-title">Table Layout</h3>
+                                        <p class="card-subtitle">Live dining floor visualizer</p>
+                                    </div>
+                                    <div class="floor-zone-select">
+                                        <select id="floor-restaurant-select" onchange="App.handleFloorChange(this.value)">
+                                            <!-- Populated dynamically -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Interactive Floor Canvas -->
+                                <div class="interactive-floor-container" id="dash-floor-grid">
+                                    <!-- Table tiles rendered via JS -->
+                                </div>
+
+                                <!-- Floor Status Legend -->
+                                <div class="floor-legend-bar">
+                                    <div class="legend-chip"><span class="legend-color-dot dot-available"></span> Available</div>
+                                    <div class="legend-chip"><span class="legend-color-dot dot-reserved"></span> Reserved</div>
+                                    <div class="legend-chip"><span class="legend-color-dot dot-occupied"></span> Occupied</div>
+                                    <div class="legend-chip"><span class="legend-color-dot dot-maintenance"></span> Maintenance</div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions Panel -->
+                            <div class="content-card quick-actions-panel">
+                                <h3 class="card-title" style="margin-bottom: 12px;">Quick Actions</h3>
+                                <div class="quick-action-buttons-stack">
+                                    <button class="btn btn-primary-burgundy btn-block" onclick="App.openReservationModal()">
+                                        <i data-lucide="calendar-plus"></i>
+                                        <span>New Reservation</span>
+                                    </button>
+                                    <button class="btn btn-action-tile" onclick="App.openCustomerModal()">
+                                        <i data-lucide="user-plus"></i>
+                                        <span>Add Customer</span>
+                                    </button>
+                                    <button class="btn btn-action-tile" onclick="App.openRestaurantModal()">
+                                        <i data-lucide="store"></i>
+                                        <span>Add Restaurant</span>
+                                    </button>
+                                    <button class="btn btn-action-tile" onclick="App.openMenuModal()">
+                                        <i data-lucide="utensils"></i>
+                                        <span>Add Menu Item</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Featured Restaurant Card (Matches Screenshot) -->
+                            <div class="featured-restaurant-card" id="dash-featured-restaurant-card">
+                                <!-- Populated dynamically -->
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Popular Menu Items Section (Matches Screenshot) -->
+                    <div class="dashboard-menu-showcase">
+                        <div class="content-card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <h2 class="card-title" style="font-size: 1.25rem;">Popular Menu Items</h2>
+                                <p class="card-subtitle">Chef's recommended signatures across Pune kitchens</p>
+                            </div>
+                            <button class="btn btn-outline-burgundy btn-sm" onclick="App.navigateTo('menu')">
+                                <span>View Full Menu</span>
+                                <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Menu Category Filter Tabs -->
+                        <div class="category-tabs-carousel" id="dash-menu-category-tabs">
+                            <button class="cat-pill active" onclick="App.filterDashMenu('All')">All</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('Starters')">Starters</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('Main Course')">Main Course</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('Biryani')">Biryani</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('Chinese')">Chinese</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('South Indian')">South Indian</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('Desserts')">Desserts</button>
+                            <button class="cat-pill" onclick="App.filterDashMenu('Beverages')">Beverages</button>
+                        </div>
+
+                        <!-- Horizontal Scroll Menu Cards Grid -->
+                        <div class="menu-cards-showcase-grid" id="dash-menu-cards-container">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- ==========================================
+                     2. HOTELS & RESTAURANTS DISCOVERY VIEW (NEW!)
+                     ========================================== -->
+                <section class="view-section" id="view-hotels">
+                    <div class="discovery-header-banner">
+                        <div class="discovery-banner-content">
+                            <span class="discovery-badge"><i data-lucide="map-pin"></i> Pune Dining & Hotel Collection</span>
+                            <h2>Discover Premier Hotels & Restaurants in Pune</h2>
+                            <p>Reserve handcrafted tables at JW Marriott, Conrad, Hyatt, The Westin, and iconic Pune dining institutions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="discovery-filter-bar">
+                        <div class="discovery-search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="hotels-search-input" placeholder="Search by hotel name, Senapati Bapat Rd, Koregaon Park, cuisine..." oninput="App.handleHotelsSearch()">
+                        </div>
+
+                        <div class="filter-controls-group">
+                            <select id="hotels-location-filter" class="form-select-filter" onchange="App.handleHotelsFilter()">
+                                <option value="ALL">All Locations</option>
+                                <option value="Senapati Bapat Road">Senapati Bapat Road</option>
+                                <option value="Mangaldas Road">Mangaldas Road</option>
+                                <option value="Kalyani Nagar">Kalyani Nagar</option>
+                                <option value="Koregaon Park">Koregaon Park</option>
+                                <option value="Baner Road">Baner / Balewadi</option>
+                            </select>
+
+                            <select id="hotels-cuisine-filter" class="form-select-filter" onchange="App.handleHotelsFilter()">
+                                <option value="ALL">All Cuisines</option>
+                                <option value="North Indian">North Indian</option>
+                                <option value="Pan-Asian">Pan-Asian</option>
+                                <option value="Italian">Italian & Continental</option>
+                                <option value="Mughlai">Mughlai & Biryani</option>
+                                <option value="South East Asian">South East Asian</option>
+                            </select>
+
+                            <select id="hotels-rating-filter" class="form-select-filter" onchange="App.handleHotelsFilter()">
+                                <option value="ALL">All Ratings</option>
+                                <option value="4.8">4.8+ Stars</option>
+                                <option value="4.6">4.6+ Stars</option>
+                                <option value="4.5">4.5+ Stars</option>
+                            </select>
+
+                            <select id="hotels-price-filter" class="form-select-filter" onchange="App.handleHotelsFilter()">
+                                <option value="ALL">All Prices</option>
+                                <option value="₹₹">₹₹ (Moderate)</option>
+                                <option value="₹₹₹">₹₹₹ (Premium)</option>
+                                <option value="₹₹₹₹">₹₹₹₹ (Luxury Fine Dining)</option>
+                            </select>
+
+                            <button class="btn btn-secondary btn-sm" onclick="App.resetHotelsFilters()" title="Reset Filters">
+                                <i data-lucide="rotate-ccw"></i>
+                                <span>Reset</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Cards Grid -->
+                    <div class="hotels-discovery-grid" id="hotels-cards-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     3. HOTEL DETAIL PAGE (Comprehensive Dedicated View)
+                     ========================================== -->
+                <section class="view-section" id="view-hotel-detail">
+                    <!-- Loaded dynamically via App.openHotelDetail(id) -->
+                    <div id="hotel-detail-wrapper">
+                        <!-- Rendered by JS -->
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     4. MASTER MENU ITEMS CATALOG VIEW (NEW!)
+                     ========================================== -->
+                <section class="view-section" id="view-menu">
+                    <div class="menu-page-header">
+                        <div>
+                            <h2 class="view-title">Culinary Menu & Offerings</h2>
+                            <p class="view-subtitle">Browse full multi-cuisine dishes, vegetarian signatures, and beverages</p>
+                        </div>
+                        <div class="header-action-group">
+                            <button class="btn btn-primary" onclick="App.openMenuModal()">
+                                <i data-lucide="plus-circle"></i>
+                                <span>Add New Dish</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Menu Filter Bar -->
+                    <div class="menu-filter-bar">
+                        <div class="search-box" style="flex: 1; max-width: 380px;">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="menu-search-input" placeholder="Search menu items, ingredients..." oninput="App.handleMenuSearch()">
+                        </div>
+
+                        <!-- Category Selector -->
+                        <div class="menu-category-pills-row" id="menu-view-cat-pills">
+                            <button class="menu-cat-btn active" data-cat="All" onclick="App.selectMenuCategory('All')">All</button>
+                            <button class="menu-cat-btn" data-cat="Starters" onclick="App.selectMenuCategory('Starters')">Starters</button>
+                            <button class="menu-cat-btn" data-cat="Main Course" onclick="App.selectMenuCategory('Main Course')">Main Course</button>
+                            <button class="menu-cat-btn" data-cat="Biryani" onclick="App.selectMenuCategory('Biryani')">Biryani</button>
+                            <button class="menu-cat-btn" data-cat="Chinese" onclick="App.selectMenuCategory('Chinese')">Chinese</button>
+                            <button class="menu-cat-btn" data-cat="South Indian" onclick="App.selectMenuCategory('South Indian')">South Indian</button>
+                            <button class="menu-cat-btn" data-cat="Continental" onclick="App.selectMenuCategory('Continental')">Continental</button>
+                            <button class="menu-cat-btn" data-cat="Desserts" onclick="App.selectMenuCategory('Desserts')">Desserts</button>
+                            <button class="menu-cat-btn" data-cat="Beverages" onclick="App.selectMenuCategory('Beverages')">Beverages</button>
+                        </div>
+
+                        <!-- Diet & Price Filters -->
+                        <div class="filter-group">
+                            <select id="menu-diet-filter" class="form-select-filter" onchange="App.handleMenuFilterChange()">
+                                <option value="ALL">All Diets</option>
+                                <option value="VEG">🟢 Vegetarian Only</option>
+                                <option value="NONVEG">🔺 Non-Vegetarian</option>
+                            </select>
+
+                            <select id="menu-sort-filter" class="form-select-filter" onchange="App.handleMenuFilterChange()">
+                                <option value="POPULAR">Most Popular</option>
+                                <option value="PRICE_LOW">Price: Low to High</option>
+                                <option value="PRICE_HIGH">Price: High to Low</option>
+                                <option value="RATING">Highest Rated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Menu Grid Container -->
+                    <div class="full-menu-grid" id="full-menu-cards-container">
+                        <!-- Populated via JS -->
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     5. CUSTOMERS VIEW (Preserved & Enhanced)
+                     ========================================== -->
+                <section class="view-section" id="view-customers">
+                    <div class="table-filter-bar">
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="customer-search-input" placeholder="Search customers by name, email, or phone..." oninput="App.handleCustomerSearch()">
+                        </div>
+
+                        <div class="filter-group">
+                            <button class="btn btn-secondary btn-sm" onclick="App.resetCustomerSearch()">
+                                <i data-lucide="rotate-ccw"></i>
+                                <span>Clear</span>
+                            </button>
+                            <button class="btn btn-primary" onclick="App.openCustomerModal()">
+                                <i data-lucide="user-plus"></i>
+                                <span>Add Customer</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Customer Details</th>
+                                        <th>Email Address</th>
+                                        <th>Phone Number</th>
+                                        <th>Dietary & Notes</th>
+                                        <th>Registered Date</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customers-table-body">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     6. RESTAURANTS VIEW (Preserved & Enhanced)
+                     ========================================== -->
+                <section class="view-section" id="view-restaurants">
+                    <div class="table-filter-bar">
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="restaurant-search-input" placeholder="Search by name, location, or cuisine..." oninput="App.handleRestaurantSearch()">
+                        </div>
+
+                        <div class="filter-group">
+                            <select id="restaurant-cuisine-filter" class="form-select-filter" onchange="App.handleRestaurantFilter()">
+                                <option value="ALL">All Cuisines</option>
+                                <!-- Populated dynamically -->
+                            </select>
+
+                            <button class="btn btn-primary" onclick="App.openRestaurantModal()">
+                                <i data-lucide="plus-circle"></i>
+                                <span>Add Restaurant</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid" id="restaurants-cards-container">
+                        <!-- Populated via JS -->
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     7. TABLES VIEW (Preserved & Enhanced)
+                     ========================================== -->
+                <section class="view-section" id="view-tables">
+                    <div class="table-filter-bar">
+                        <div class="filter-group" style="flex: 1; flex-wrap: wrap;">
+                            <select id="tables-restaurant-filter" class="form-select-filter" onchange="App.handleTableFilter()">
+                                <option value="ALL">All Restaurants</option>
+                                <!-- Populated via JS -->
+                            </select>
+
+                            <select id="tables-status-filter" class="form-select-filter" onchange="App.handleTableFilter()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="Available">Available</option>
+                                <option value="Reserved">Reserved</option>
+                                <option value="Occupied">Occupied</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+
+                            <div class="search-box" style="min-width: 200px; max-width: 260px;">
+                                <i data-lucide="search"></i>
+                                <input type="text" id="tables-search-input" placeholder="Search table #..." oninput="App.handleTableFilter()">
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <button class="btn btn-primary" onclick="App.openTableModal()">
+                                <i data-lucide="plus-circle"></i>
+                                <span>Add Table</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Visual Floor Plan / Cards Grid -->
+                    <div class="table-cards-grid" id="tables-grid-container">
+                        <!-- Populated via JS -->
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     8. RESERVATIONS VIEW (Preserved & Enhanced)
+                     ========================================== -->
+                <section class="view-section" id="view-reservations">
+                    <div class="table-filter-bar">
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="reservation-search-input" placeholder="Search guest name, table, notes..." oninput="App.handleReservationFilter()">
+                        </div>
+
+                        <div class="filter-group" style="flex-wrap: wrap;">
+                            <select id="reservation-restaurant-filter" class="form-select-filter" onchange="App.handleReservationFilter()">
+                                <option value="ALL">All Restaurants</option>
+                                <!-- Populated dynamically -->
+                            </select>
+
+                            <select id="reservation-status-filter" class="form-select-filter" onchange="App.handleReservationFilter()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="Reserved">Reserved</option>
+                                <option value="Occupied">Occupied (Seated)</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+
+                            <input type="date" id="reservation-date-filter" class="form-control" style="width: auto; padding: 8px 12px;" onchange="App.handleReservationFilter()">
+
+                            <button class="btn btn-secondary btn-sm" onclick="App.resetReservationFilters()" title="Reset Filters">
+                                <i data-lucide="rotate-ccw"></i>
+                            </button>
+
+                            <button class="btn btn-primary" onclick="App.openReservationModal()">
+                                <i data-lucide="calendar-plus"></i>
+                                <span>Book Table</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Reservation ID</th>
+                                        <th>Customer</th>
+                                        <th>Restaurant</th>
+                                        <th>Table & Seats</th>
+                                        <th>Date & Time</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reservations-table-body">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     9. SPRING BOOT & VIVA ARCHITECTURE TAB
+                     ========================================== -->
+                <section class="view-section" id="view-viva">
+                    <div class="arch-card">
+                        <div class="arch-header">
+                            <div>
+                                <h3>Backend Technical Architecture & Viva Guide</h3>
+                                <p>Prepared for Spring Boot REST API + JdbcTemplate + MySQL Database (Pune Demonstration)</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="App.resetDemoData()">
+                                <i data-lucide="refresh-cw"></i>
+                                <span>Reset Pune Demo Data</span>
+                            </button>
+                        </div>
+
+                        <!-- Architecture Flow Diagram -->
+                        <div class="arch-flow-diagram">
+                            <div class="arch-step-node">
+                                <div class="node-icon"><i data-lucide="monitor"></i></div>
+                                <strong>Frontend UI</strong>
+                                <span>HTML5 / Vanilla CSS / JS</span>
+                            </div>
+                            <div class="arch-arrow">➔</div>
+                            <div class="arch-step-node">
+                                <div class="node-icon"><i data-lucide="network"></i></div>
+                                <strong>REST API</strong>
+                                <span>Spring Boot @RestController</span>
+                            </div>
+                            <div class="arch-arrow">➔</div>
+                            <div class="arch-step-node">
+                                <div class="node-icon"><i data-lucide="cpu"></i></div>
+                                <strong>Service Layer</strong>
+                                <span>Business Logic & Slot Checks</span>
+                            </div>
+                            <div class="arch-arrow">➔</div>
+                            <div class="arch-step-node">
+                                <div class="node-icon"><i data-lucide="layers"></i></div>
+                                <strong>DAO Layer</strong>
+                                <span>Spring JdbcTemplate</span>
+                            </div>
+                            <div class="arch-arrow">➔</div>
+                            <div class="arch-step-node">
+                                <div class="node-icon"><i data-lucide="database"></i></div>
+                                <strong>Database</strong>
+                                <span>MySQL 8.0</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 24px;">
+                            <div>
+                                <h4 style="margin-bottom: 8px; font-size: 0.95rem;">MySQL DDL Schema (College Submission)</h4>
+                                <div class="code-block">
+CREATE DATABASE tableease_db;
+USE tableease_db;
+
+-- 1. Customers Table
+CREATE TABLE customers (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(120) NOT NULL UNIQUE,
+    phone VARCHAR(25) NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Hotels & Restaurants Table
+CREATE TABLE restaurants (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(120) NOT NULL,
+    location VARCHAR(200) NOT NULL,
+    cuisine VARCHAR(100) NOT NULL,
+    rating DECIMAL(2,1) DEFAULT 4.5,
+    contact VARCHAR(30),
+    opening_hours VARCHAR(60),
+    hero_image VARCHAR(255),
+    google_maps_url VARCHAR(255)
+);
+
+-- 3. Restaurant Tables
+CREATE TABLE restaurant_tables (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id BIGINT NOT NULL,
+    table_number VARCHAR(20) NOT NULL,
+    capacity INT NOT NULL,
+    status ENUM('Available','Reserved','Occupied','Maintenance') DEFAULT 'Available',
+    floor_area VARCHAR(50),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
+);
+
+-- 4. Reservations Table
+CREATE TABLE reservations (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id BIGINT NOT NULL,
+    restaurant_id BIGINT NOT NULL,
+    table_id BIGINT NOT NULL,
+    reservation_date DATE NOT NULL,
+    reservation_time TIME NOT NULL,
+    guest_count INT NOT NULL,
+    status ENUM('Reserved','Occupied','Completed','Cancelled') DEFAULT 'Reserved',
+    special_requests TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
+    FOREIGN KEY (table_id) REFERENCES restaurant_tables(id)
+);
+
+-- 5. Menu Items Table
+CREATE TABLE menu_items (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id BIGINT,
+    name VARCHAR(120) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    price DECIMAL(8,2) NOT NULL,
+    is_veg BOOLEAN DEFAULT TRUE,
+    rating DECIMAL(2,1) DEFAULT 4.8,
+    short_desc VARCHAR(255),
+    image_url VARCHAR(255)
+);
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="margin-bottom: 8px; font-size: 0.95rem;">Spring Boot JdbcTemplate DAO Example</h4>
+                                <div class="code-block">
+@Repository
+public class ReservationDaoImpl implements ReservationDao {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<Reservation> findTodayReservations(LocalDate date) {
+        String sql = "SELECT * FROM reservations WHERE reservation_date = ?";
+        return jdbcTemplate.query(sql, new ReservationRowMapper(), date);
+    }
+
+    @Override
+    public int updateStatus(Long id, String status) {
+        String sql = "UPDATE reservations SET status = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, status, id);
+    }
+
+    @Override
+    public int createReservation(Reservation res) {
+        String sql = "INSERT INTO reservations " +
+                     "(customer_id, restaurant_id, table_id, " +
+                     "reservation_date, reservation_time, guest_count, status) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, res.getCustomerId(), res.getRestaurantId(),
+               res.getTableId(), res.getReservationDate(), res.getReservationTime(),
+               res.getGuestCount(), res.getStatus());
+    }
+}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Viva Q&A Cheat Sheet -->
+                        <h4 style="margin-top: 28px; margin-bottom: 14px; font-size: 1rem;">Viva Defense & Presentation Cheatsheet</h4>
+                        <div class="viva-qna-grid">
+                            <div class="qna-card">
+                                <div class="qna-question">Q: Why use JdbcTemplate instead of heavy JPA/Hibernate?</div>
+                                <div class="qna-answer">JdbcTemplate eliminates boilerplate JDBC code (connections, statements, exception handling) while retaining explicit, transparent SQL control and minimal runtime overhead for a college mini project.</div>
+                            </div>
+                            <div class="qna-card">
+                                <div class="qna-question">Q: How does the system prevent table overbooking?</div>
+                                <div class="qna-answer">Before confirming a booking, the Service checks whether the selected table has any overlapping reservation for the same date/time window. Upon confirmation, the table status is updated to 'Reserved'.</div>
+                            </div>
+                            <div class="qna-card">
+                                <div class="qna-question">Q: How are Google Maps integrated without paid API keys?</div>
+                                <div class="qna-answer">Direct Google Maps search URLs are constructed dynamically using verified Pune hotel addresses (`maps/search/?api=1&query=...`), enabling 1-click external navigation on all platforms without billing keys.</div>
+                            </div>
+                            <div class="qna-card">
+                                <div class="qna-question">Q: How does the multi-layer architecture maintain Clean Architecture?</div>
+                                <div class="qna-answer">Presentation (HTML/CSS/JS) is decoupled from Business Logic (Service). The Controller handles HTTP JSON contracts, the Service enforces table validation rules, and DAO handles raw database persistence.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODALS
+         ========================================== -->
+
+    <!-- CUSTOMER MODAL (Add/Edit) -->
+    <div class="modal-overlay" id="modal-customer">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-customer-title">Add New Customer</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-customer')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="form-customer" onsubmit="App.handleSaveCustomer(event)">
+                <input type="hidden" id="cust-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="cust-name">Full Name <span class="req">*</span></label>
+                        <input type="text" id="cust-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cust-email">Email Address <span class="req">*</span></label>
+                            <input type="email" id="cust-email" class="form-control" placeholder="e.g. rahul@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-phone">Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. +91 98220 12345" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-notes">Dietary Preferences / Special Notes</label>
+                        <textarea id="cust-notes" class="form-control" rows="3" placeholder="e.g. Vegetarian, anniversary dinner, high chair needed"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-customer')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-cust">Save Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- RESTAURANT MODAL (Add/Edit) -->
+    <div class="modal-overlay" id="modal-restaurant">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-restaurant-title">Add New Restaurant / Hotel</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-restaurant')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="form-restaurant" onsubmit="App.handleSaveRestaurant(event)">
+                <input type="hidden" id="rest-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="rest-name">Hotel / Restaurant Name <span class="req">*</span></label>
+                        <input type="text" id="rest-name" class="form-control" placeholder="e.g. JW Marriott Hotel Pune" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rest-location">Full Address (Pune) <span class="req">*</span></label>
+                            <input type="text" id="rest-location" class="form-control" placeholder="e.g. Senapati Bapat Road, Pune, Maharashtra 411053" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rest-cuisine">Cuisine Specialties <span class="req">*</span></label>
+                            <input type="text" id="rest-cuisine" class="form-control" placeholder="e.g. North Indian, Italian, Pan-Asian" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rest-contact">Contact Phone</label>
+                            <input type="text" id="rest-contact" class="form-control" placeholder="e.g. +91 20 6683 3333">
+                        </div>
+                        <div class="form-group">
+                            <label for="rest-hours">Opening Hours</label>
+                            <input type="text" id="rest-hours" class="form-control" placeholder="e.g. 06:30 AM - 11:30 PM">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rest-desc">Brief Description & Ambiance</label>
+                        <textarea id="rest-desc" class="form-control" rows="2" placeholder="Luxury amenities, rooftop views, signature chefs..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-restaurant')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-rest">Save Hotel/Restaurant</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TABLE MODAL (Add/Edit) -->
+    <div class="modal-overlay" id="modal-table">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-table-title">Add Dining Table</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-table')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="form-table" onsubmit="App.handleSaveTable(event)">
+                <input type="hidden" id="tbl-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="tbl-restaurant">Select Restaurant / Hotel <span class="req">*</span></label>
+                        <select id="tbl-restaurant" class="form-control" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tbl-number">Table Identifier <span class="req">*</span></label>
+                            <input type="text" id="tbl-number" class="form-control" placeholder="e.g. T-01, JW-T04" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tbl-capacity">Guest Capacity (Seats) <span class="req">*</span></label>
+                            <input type="number" id="tbl-capacity" class="form-control" min="1" max="30" value="4" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tbl-status">Initial Status <span class="req">*</span></label>
+                            <select id="tbl-status" class="form-control" required>
+                                <option value="Available">Available</option>
+                                <option value="Reserved">Reserved</option>
+                                <option value="Occupied">Occupied</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tbl-floor">Floor Area / Zone</label>
+                            <input type="text" id="tbl-floor" class="form-control" placeholder="e.g. Window Side, Sky Deck, Main Hall">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-table')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-tbl">Save Table</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- RESERVATION MODAL (Book / Edit) -->
+    <div class="modal-overlay" id="modal-reservation">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-reservation-title">Book Table Reservation</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-reservation')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="form-reservation" onsubmit="App.handleSaveReservation(event)">
+                <input type="hidden" id="res-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="res-customer">Select Customer <span class="req">*</span></label>
+                        <select id="res-customer" class="form-control" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="res-restaurant">Select Restaurant / Hotel <span class="req">*</span></label>
+                        <select id="res-restaurant" class="form-control" onchange="App.handleReservationRestaurantChange()" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="res-date">Reservation Date <span class="req">*</span></label>
+                            <input type="date" id="res-date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="res-time">Reservation Time <span class="req">*</span></label>
+                            <input type="time" id="res-time" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="res-guests">Number of Guests <span class="req">*</span></label>
+                            <input type="number" id="res-guests" class="form-control" min="1" max="25" value="2" onchange="App.handleReservationRestaurantChange()" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="res-table">Select Table <span class="req">*</span></label>
+                            <select id="res-table" class="form-control" required>
+                                <option value="">-- Choose Restaurant First --</option>
+                            </select>
+                            <small id="res-table-helper" style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; display: block;">
+                                Shows tables matching restaurant & capacity
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="res-status">Booking Status</label>
+                            <select id="res-status" class="form-control">
+                                <option value="Reserved">Reserved (Confirmed Hold)</option>
+                                <option value="Occupied">Occupied (Seated)</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="res-notes">Special Requests / Occasion Notes</label>
+                        <textarea id="res-notes" class="form-control" rows="2" placeholder="e.g. Wedding anniversary, high chair, candle setup, corner booth..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-reservation')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-res">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MENU ITEM MODAL (Add/Edit Dish) -->
+    <div class="modal-overlay" id="modal-menu">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-menu-title">Add Menu Item</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-menu')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="form-menu" onsubmit="App.handleSaveMenu(event)">
+                <input type="hidden" id="menu-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="menu-name">Dish Name <span class="req">*</span></label>
+                        <input type="text" id="menu-name" class="form-control" placeholder="e.g. Paneer Butter Masala" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="menu-category">Category <span class="req">*</span></label>
+                            <select id="menu-category" class="form-control" required>
+                                <option value="Starters">Starters</option>
+                                <option value="Main Course">Main Course</option>
+                                <option value="Biryani">Biryani</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="South Indian">South Indian</option>
+                                <option value="Continental">Continental</option>
+                                <option value="Desserts">Desserts</option>
+                                <option value="Beverages">Beverages</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-price">Price (₹) <span class="req">*</span></label>
+                            <input type="number" id="menu-price" class="form-control" min="10" placeholder="280" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="menu-isveg">Dietary Preference <span class="req">*</span></label>
+                            <select id="menu-isveg" class="form-control" required>
+                                <option value="true">🟢 Vegetarian</option>
+                                <option value="false">🔺 Non-Vegetarian</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu-preptime">Preparation Time</label>
+                            <input type="text" id="menu-preptime" class="form-control" placeholder="e.g. 15 mins">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-desc">Short Description <span class="req">*</span></label>
+                        <textarea id="menu-desc" class="form-control" rows="2" placeholder="Creamy tomato gravy with soft malai paneer..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-image">Dish Image URL</label>
+                        <input type="url" id="menu-image" class="form-control" placeholder="https://images.unsplash.com/...">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-menu')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-menu">Save Dish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER TRAY / TABLE ORDER MODAL -->
+    <div class="modal-overlay" id="modal-order-tray">
+        <div class="modal-container" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3>Table Order Tray</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-order-tray')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="order-tray-content">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-secondary" onclick="App.clearOrderTray()">Clear Tray</button>
+                <button type="button" class="btn btn-primary" onclick="App.checkoutOrderTray()">
+                    <i data-lucide="check"></i>
+                    <span>Send Order to Kitchen</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESERVATION PASS / TICKET MODAL (Print/View) -->
+    <div class="modal-overlay" id="modal-pass">
+        <div class="modal-container" style="max-width: 460px;">
+            <div class="modal-header">
+                <h3>Reservation Pass</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-pass')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="reservation-pass-content">
+                <!-- Dynamically generated ticket receipt -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-pass')">Close</button>
+                <button type="button" class="btn btn-primary" onclick="window.print()">
+                    <i data-lucide="printer"></i>
+                    <span>Print Pass</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="modal-confirm-delete">
+        <div class="modal-container" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 style="color: var(--rose-text);">Confirm Deletion</h3>
+                <button class="modal-close-btn" onclick="App.closeModal('modal-confirm-delete')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="delete-confirm-message" style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                    Are you sure you want to permanently delete this item? This action cannot be undone.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="App.closeModal('modal-confirm-delete')">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btn-confirm-delete-action">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="js/mockData.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
